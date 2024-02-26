@@ -30,7 +30,9 @@ app.add_middleware(
 async def upload_file(file: UploadFile = File(...)):
     try:
         # 파일 저장 경로 설정
+        print("**@#*@#*@#*@*#*@#*@*#*@*##*@*#@*#@*#@*")
         file_path = os.path.join("uploads", file.filename)
+        print("**@#*@#*@#*@*#*@#*@*#*@*##*@*#@*#@*#@*")
 
         # 파일 저장
         with open(file_path, "wb") as buffer:
@@ -42,6 +44,7 @@ async def upload_file(file: UploadFile = File(...)):
 
     try:
         # PDF 파일을 텍스트로 변환
+        print("**********************111*****************")
         file_text = pdf_to_text(file.filename)
     except Exception as e:
         # PDF 파일 처리 중 오류 발생
