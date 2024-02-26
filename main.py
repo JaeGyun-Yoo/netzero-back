@@ -43,7 +43,10 @@ async def upload_file(file: UploadFile = File(...)):
     try:
         # PDF 파일을 텍스트로 변환
         file_text = pdf_to_text(file.filename)
+    except Exception as e:
+        raise HTTPException(status_code = 500, detail = f"pdf_to_text 중 오류 발생:{e}")
 
+    try:
         # OpenAI GPT를 사용하여 인터뷰 질문 생성
         return train_gpt_as_interviewer(file_text)
 
