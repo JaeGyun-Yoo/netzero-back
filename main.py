@@ -52,7 +52,7 @@ async def upload_file(file: UploadFile = File(...)):
         return train_gpt_as_interviewer(file_text)
     except Exception as e:
         # GPT 호출 중 오류 발생
-        raise HTTPException(status_code=500, detail=f"GPT 호출 중 오류 발생: {e}")
+        raise HTTPException(status_code=500, detail=f"GPT 호출 중 오류ww 발생: {e}")
 
 
 
