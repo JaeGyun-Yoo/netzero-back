@@ -42,18 +42,21 @@ def is_mostly_standard_characters(text, threshold=0.8): #threshold로 임계값 
 
 
 def pdf_to_text(pdf_name): #pdf를 text로 변환
+    print(1)
     pdf_path = find_file(pdf_name)
     if pdf_path is None:
         return "File not found", None
-
+    print(2)
     extracted_text = extract_text_with_pypdf2(pdf_path)
-
+    print(3)
     if not is_mostly_standard_characters(extracted_text):
+        print(4)
         extracted_text = extract_text_with_ocr(pdf_path)
+        print(5)
         extraction_method = "OCR"
     else:
         extraction_method = "PyPDF2"
-
+    print(6)
     return extracted_text, extraction_method
 
 
