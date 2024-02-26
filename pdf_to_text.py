@@ -4,6 +4,8 @@ from pdf2image import convert_from_path
 from PIL import ImageEnhance
 import re
 import os
+import logging
+from fastapi import HTTPException
 
 def extract_text_with_pypdf2(pdf_path): #pypdf2를 이용해 텍스트 추출
     try:
