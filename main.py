@@ -28,10 +28,11 @@ app.add_middleware(
 
 @app.post("/train-gpt")
 async def upload_file(file: UploadFile = File(...)):
-    with open(os.path.join("uploads", file.filename), "wb") as buffer: #자소서를 굳이 저장을 해야될까
+    """with open(os.path.join("uploads", file.filename), "wb") as buffer: #자소서를 굳이 저장을 해야될까
         shutil.copyfileobj(file.file, buffer)
     file_text=pdf_to_text(file.filename)
-    return train_gpt_as_interviewer(file_text)
+    return train_gpt_as_interviewer(file_text)"""
+    return "안녕 나는 삼성전자에 지원하게 된 유재균이야. 나는 백엔드 코딩을 잘해"
 
 
 @app.post("/get-question")
