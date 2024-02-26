@@ -10,6 +10,7 @@ from non_verbal_behavior import get_feedback_non_verbal_behavior
 from test import post_to_gpt_test
 from emotion_analysis import video_emotion_analysis
 
+
 app = FastAPI()
 origins = ["*"]
 
@@ -25,14 +26,30 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 헤더 허용
 )
 
-
 @app.post("/train-gpt")
 async def upload_file(file: UploadFile = File(...)):
-    """with open(os.path.join("uploads", file.filename), "wb") as buffer: #자소서를 굳이 저장을 해야될까
-        shutil.copyfileobj(file.file, buffer)
-    file_text=pdf_to_text(file.filename)
-    return train_gpt_as_interviewer(file_text)"""
-    return "안녕 나는 삼성전자에 지원하게 된 유재균이야. 나는 백엔드 코딩을 잘해"
+    try:
+        # 파일 저장 경로 설정
+        file_path = os.path.join("uploads", file.filename)
+
+        # 파일 저장
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+    except Exception as e:
+        # 파일 저장 중에 오류 발생
+        raise HTTPException(status_code=500, detail=f"파일 저장 중 오류 발생: {e}")
+
+    try:
+        # PDF 파일을 텍스트로 변환
+        file_text = pdf_to_text(file.filename)
+
+        # OpenAI GPT를 사용하여 인터뷰 질문 생성
+        return train_gpt_as_interviewer(file_text)
+
+    except Exception as e:
+        # PDF 처리 또는 GPT 호출 중 오류 발생
+        raise HTTPException(status_code=500, detail=f"PDF 처리 또는 GPT 호출 중 오류 발생: {e}")
 
 
 @app.post("/get-question")
